@@ -48,7 +48,7 @@ var ContextMenuTrigger = function (_Component) {
             args[_key] = arguments[_key];
         }
 
-        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = ContextMenuTrigger.__proto__ || Object.getPrototypeOf(ContextMenuTrigger)).call.apply(_ref, [this].concat(args))), _this), _this.handleMouseDown = function (event) {
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = ContextMenuTrigger.__proto__ || Object.getPrototypeOf(ContextMenuTrigger)).call.apply(_ref, [this].concat(args))), _this), _this.touchHandled = false, _this.handleMouseDown = function (event) {
             if (_this.props.holdToDisplay >= 0 && event.button === 0) {
                 event.persist();
 
@@ -66,9 +66,12 @@ var ContextMenuTrigger = function (_Component) {
 
                 _this.touchstartTimeoutId = setTimeout(function () {
                     return _this.handleContextClick(event);
-                }, _this.props.holdToDisplay);
+                }, _this.props.holdToDisplay, _this.touchHandled = true);
             }
         }, _this.handleTouchEnd = function (event) {
+            if (_this.touchHandled) {
+                event.preventDefault();
+            }
             clearTimeout(_this.touchstartTimeoutId);
         }, _this.handleContextClick = function (event) {
             if (_this.props.disable) return;
