@@ -28,7 +28,7 @@ export default class ContextMenuTrigger extends Component {
         renderTag: 'div'
     };
 
-    static touchHandled = false;
+    touchHandled = false;
 
     handleMouseDown = (event) => {
         if (this.props.holdToDisplay >= 0 && event.button === 0) {
@@ -51,11 +51,10 @@ export default class ContextMenuTrigger extends Component {
         if (this.props.holdToDisplay >= 0) {
             event.persist();
 
-            this.touchHandled = true;
-
             this.touchstartTimeoutId = setTimeout(
                 () => this.handleContextClick(event),
-                this.props.holdToDisplay
+                this.props.holdToDisplay,
+                this.touchHandled = true
             );
         }
     }
