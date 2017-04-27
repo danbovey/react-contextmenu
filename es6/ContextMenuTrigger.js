@@ -41,12 +41,15 @@ var ContextMenuTrigger = function (_Component) {
                 clearTimeout(_this.mouseDownTimeoutId);
             }
         }, _this.handleTouchstart = function (event) {
+            _this.touchHandled = false;
+
             if (_this.props.holdToDisplay >= 0) {
                 event.persist();
 
                 _this.touchstartTimeoutId = setTimeout(function () {
-                    return _this.handleContextClick(event);
-                }, _this.props.holdToDisplay, _this.touchHandled = true);
+                    _this.handleContextClick(event);
+                    _this.touchHandled = true;
+                }, _this.props.holdToDisplay);
             }
         }, _this.handleTouchEnd = function (event) {
             if (_this.touchHandled) {
